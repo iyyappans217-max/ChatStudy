@@ -73,6 +73,62 @@ Client-server chat applications are versatile tools that facilitate real-time co
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
 
+## CODE:
+SERVER2.PY
+```
+import socket
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+host = "127.0.0.1"
+port = 12345
+server.bind((host, port))
+server.listen(1)
+print("Server waiting for connection...")
+conn, addr = server.accept()
+print("Connected to:", addr)
+while True:
+    client_msg = conn.recv(1024).decode()
+    print("Client:", client_msg)
+
+    if client_msg.lower() == "exit":
+        break
+    msg = input("Server: ")
+    conn.send(msg.encode())
+
+    if msg.lower() == "exit":
+        break
+
+conn.close()
+server.close()
+```
+
+CLIENT2.PY
+```
+import socket
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+host = "127.0.0.1"
+port = 12345
+client.connect((host, port))
+while True:
+    msg = input("Client: ")
+    client.send(msg.encode())
+    if msg.lower() == "exit":
+        break
+   
+    server_msg = client.recv(1024).decode()
+    print("Server:", server_msg)
+    if server_msg.lower() == "exit":
+        break
+
+client.close()
+```
+
+## Output:
+SERVER2.PY
+<img width="1922" height="980" alt="server2" src="https://github.com/user-attachments/assets/d75b8422-38e7-4249-8207-fc65fb0fb2d6" />
+
+CLIENT2.PY
+<img width="1920" height="1021" alt="client2" src="https://github.com/user-attachments/assets/4e911d15-1907-4560-bea2-a315ab487806" />
+
 
 ## Result:
 
